@@ -1,160 +1,172 @@
 <?php
-class cd
+class usuario
 {
 	public $id;
- 	public $titulo;
-  	public $cantante;
-  	public $año;
+ 	public $nombre;
+  	public $clave;
+  	public $perfil;
 
 
 
-  	public function BorrarCd()
+  	public function Borrarusuario()
 	 {
 	 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				delete 
-				from cds 				
+				from usuario 				
 				WHERE id=:id");	
 				$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);		
 				$consulta->execute();
 				return $consulta->rowCount();
 	 }
 
-	public static function BorrarCdPorAnio($año)
+	public static function BorrarusuarioPorperfil($perfil)
 	 {
 
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				delete 
-				from cds 				
-				WHERE jahr=:anio");	
-				$consulta->bindValue(':anio',$año, PDO::PARAM_INT);		
+				from usuario 				
+				WHERE perfil=:perfil");	
+				$consulta->bindValue(':perfil',$perfil, PDO::PARAM_INT);		
 				$consulta->execute();
 				return $consulta->rowCount();
 
 	 }
-	public function ModificarCd()
+	public function Modificarusuario()
 	 {
 
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
-				update cds 
-				set titel='$this->titulo',
-				interpret='$this->cantante',
-				jahr='$this->año'
+				update usuario 
+				set nombre='$this->nombre',
+				clave='$this->clave',
+				perfil='$this->perfil'
 				WHERE id='$this->id'");
 			return $consulta->execute();
 
 	 }
 	
   
-	 public function InsertarElCd()
+	 public function InsertarElusuario()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into cds (titel,interpret,jahr)values('$this->titulo','$this->cantante','$this->año')");
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (nombre,clave,perfil)values('$this->nombre','$this->clave','$this->perfil')");
 				$consulta->execute();
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
 				
 
 	 }
 
-	  public function ModificarCdParametros()
+	  public function ModificarusuarioParametros()
 	 {
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
-				update cds 
-				set titel=:titulo,
-				interpret=:cantante,
-				jahr=:anio
+				update usuario 
+				set nombre=:nombre,
+				clave=:clave,
+				perfil=:perfil
 				WHERE id=:id");
 			$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);
-			$consulta->bindValue(':titulo',$this->titulo, PDO::PARAM_INT);
-			$consulta->bindValue(':anio', $this->año, PDO::PARAM_STR);
-			$consulta->bindValue(':cantante', $this->cantante, PDO::PARAM_STR);
+			$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_INT);
+			$consulta->bindValue(':perfil', $this->perfil, PDO::PARAM_STR);
+			$consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
 			return $consulta->execute();
 	 }
 
-	 public function InsertarElCdParametros()
+	 public function InsertarElUsuarioParametros()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into cds (titel,interpret,jahr)values(:titulo,:cantante,:anio)");
-				$consulta->bindValue(':titulo',$this->titulo, PDO::PARAM_INT);
-				$consulta->bindValue(':anio', $this->año, PDO::PARAM_STR);
-				$consulta->bindValue(':cantante', $this->cantante, PDO::PARAM_STR);
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (nombre,clave,perfil)values(:nombre,:clave,:perfil)");
+				$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
+				$consulta->bindValue(':perfil', $this->perfil, PDO::PARAM_STR);
+				$consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
 				$consulta->execute();		
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	 }
-	 public function GuardarCD()
+	 public function Guardarusuario()
 	 {
 
 	 	if($this->id>0)
 	 		{
-	 			$this->ModificarCdParametros();
+	 			$this->ModificarusuarioParametros();
 	 		}else {
-	 			$this->InsertarElCdParametros();
+	 			$this->InsertarElusuarioParametros();
 	 		}
 
 	 }
 
 
-  	public static function TraerTodoLosCds()
+  	public static function TraerTodoLosusuario()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,titel as titulo, interpret as cantante,jahr as año from cds");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, clave as clave,perfil as perfil from usuario");
 			$consulta->execute();			
-			return $consulta->fetchAll(PDO::FETCH_CLASS, "cd");		
+			return $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");		
 	}
 
-	public static function TraerUnCd($id) 
+	public static function TraerUnusuario($id) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id, titel as titulo, interpret as cantante,jahr as año from cds where id = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id, nombre as nombre, clave as clave,perfil as perfil from usuario where id = $id");
 			$consulta->execute();
-			$cdBuscado= $consulta->fetchObject('cd');
-			return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('usuario');
+			return $usuarioBuscado;				
 
 			
 	}
 
-	public static function TraerUnCdAnio($id,$anio) 
+	public static function TraerUnusuarioperfil($id,$perfil) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select  titel as titulo, interpret as cantante,jahr as año from cds  WHERE id=? AND jahr=?");
-			$consulta->execute(array($id, $anio));
-			$cdBuscado= $consulta->fetchObject('cd');
-      		return $cdBuscado;				
+			$consulta =$objetoAccesoDato->RetornarConsulta("select  nombre as nombre, clave as clave,perfil as perfil from usuario  WHERE id=? AND perfil=?");
+			$consulta->execute(array($id, $perfil));
+			$usuarioBuscado= $consulta->fetchObject('usuario');
+      		return $usuarioBuscado;				
 
 			
 	}
 
-	public static function TraerUnCdAnioParamNombre($id,$anio) 
+	public static function TraerUnusuarioperfilParamNombre($id,$perfil) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select  titel as titulo, interpret as cantante,jahr as año from cds  WHERE id=:id AND jahr=:anio");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select  nombre as nombre, clave as clave,perfil as perfil from usuario  WHERE id=:id AND perfil=:perfil");
 			$consulta->bindValue(':id', $id, PDO::PARAM_INT);
-			$consulta->bindValue(':anio', $anio, PDO::PARAM_STR);
+			$consulta->bindValue(':perfil', $perfil, PDO::PARAM_STR);
 			$consulta->execute();
-			$cdBuscado= $consulta->fetchObject('cd');
-      		return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('usuario');
+      		return $usuarioBuscado;				
 
 			
 	}
 	
-	public static function TraerUnCdAnioParamNombreArray($id,$anio) 
+	public static function TraerUnusuarioperfilParamNombreArray($id,$perfil) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select  titel as titulo, interpret as cantante,jahr as año from cds  WHERE id=:id AND jahr=:anio");
-			$consulta->execute(array(':id'=> $id,':anio'=> $anio));
+			$consulta =$objetoAccesoDato->RetornarConsulta("select  nombre as nombre, clave as clave,perfil as perfil from usuario  WHERE id=:id AND perfil=:perfil");
+			$consulta->execute(array(':id'=> $id,':perfil'=> $perfil));
 			$consulta->execute();
-			$cdBuscado= $consulta->fetchObject('cd');
-      		return $cdBuscado;				
+			$usuarioBuscado= $consulta->fetchObject('usuario');
+      		return $usuarioBuscado;				
 
 			
 	}
 
 	public function mostrarDatos()
 	{
-	  	return "Metodo mostar:".$this->titulo."  ".$this->cantante."  ".$this->año;
+	  	return "Metodo mostar:".$this->nombre."  ".$this->clave."  ".$this->perfil;
 	}
 
+	public static function Logear($us,$clave)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+		$consulta = $objetoAccesoDato->RetornarConsulta("select id, nombre, perfil from usuario where nombre = :nombre AND clave = :clave");
+		$consulta->bindValue(':nombre',$us,PDO::PARAM_STR);
+		$consulta->bindValue(':clave',$clave,PDO::PARAM_STR);
+		$consulta->execute();
+		$EmpleadoLogeado = $consulta->fetchObject('usuario');
+		//echo var_dump($consulta);
+		//echo var_dump($EmpleadoLogeado);
+		return $EmpleadoLogeado;
+	}
 }

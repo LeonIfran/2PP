@@ -101,7 +101,7 @@ class media
   	public static function TraerTodoLosmedias()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,titel as color, interpret as marca,jahr as precio from medias");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,color,marca,precio, talle, foto from medias");
 			$consulta->execute();			
 			return $consulta->fetchAll(PDO::FETCH_CLASS, "media");		
 	}

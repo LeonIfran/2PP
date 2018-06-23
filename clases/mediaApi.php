@@ -10,7 +10,7 @@ class mediaApi extends media implements IApiUsable
         if(!$elmedia)
         {
             $objDelaRespuesta= new stdclass();
-            $objDelaRespuesta->error="No esta El media";
+            $objDelaRespuesta->error="No esta La media";
             $NuevaRespuesta = $response->withJson($objDelaRespuesta, 500); 
         }else
         {
