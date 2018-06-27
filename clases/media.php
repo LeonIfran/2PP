@@ -9,7 +9,7 @@ class media
 	public $foto;
 
 
-  	public function Borrarmedia()
+  	public function BorrarMedia()
 	 {
 	 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("

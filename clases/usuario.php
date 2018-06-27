@@ -97,10 +97,10 @@ class usuario
 	 }
 
 
-  	public static function TraerTodoLosusuario()
+  	public static function TraerTodosLosUsuarios()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, clave as clave,perfil as perfil from usuario");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, perfil as perfil from usuario");
 			$consulta->execute();			
 			return $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");		
 	}

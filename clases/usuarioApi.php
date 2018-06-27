@@ -19,8 +19,8 @@ class usuarioApi extends usuario implements IApiUsable
         return $NuevaRespuesta;
     }
      public function TraerTodos($request, $response, $args) {
-      	$todosLosCds=cd::TraerTodoLosCds();
-     	$newresponse = $response->withJson($todosLosCds, 200);  
+      	$todosLosUsuarios=usuario::TraerTodosLosUsuarios();
+     	$newresponse = $response->withJson($todosLosUsuarios, 200);  
     	return $newresponse;
     }
       public function CargarUno($request, $response, $args) {
@@ -51,7 +51,7 @@ class usuarioApi extends usuario implements IApiUsable
             $archivos['foto']->moveTo($destino.$nombre.".".$extension[0]);
         }        */
         //$response->getBody()->write("se guardo el cd");
-        $objDelaRespuesta->respuesta="Se guardo el Usuario.";   
+        $objDelaRespuesta->respuesta="Se guardo el Usuario: $miusuario->nombre.";   
         return $response->withJson($objDelaRespuesta, 200);
     }
       public function BorrarUno($request, $response, $args) {

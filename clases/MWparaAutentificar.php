@@ -22,13 +22,13 @@ class MWparaAutentificar
 		$objDelaRespuesta= new stdclass();
 		$objDelaRespuesta->respuesta="";
 	   
-		if($request->isGet())
+/*  		if($request->isGet())
 		{
-		// $response->getBody()->write('<p>NO necesita credenciales para los get </p>');
+		 $response->getBody()->write('<p>NO necesita credenciales para los get </p>');
 		 $response = $next($request, $response);
 		}
 		else
-		{
+		{  */
 			//$response->getBody()->write('<p>verifico credenciales</p>');
 
 			//perfil=Profesor (GET, POST)
@@ -36,15 +36,6 @@ class MWparaAutentificar
 			
 			//perfil=Administrador(todos)
 			//$datos = array('usuario' => 'rogelio@agua.com','perfil' => 'Administrador', 'alias' => "PinkBoy");
-			
-			//$token= AutentificadorJWT::CrearToken($datos);
-
-			//token vencido
-			//$token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTc1Njc5NjUsImV4cCI6MTQ5NzU2NDM2NSwiYXVkIjoiNGQ5ODU5ZGU4MjY4N2Y0YzEyMDg5NzY5MzQ2OGFhNzkyYTYxNTMwYSIsImRhdGEiOnsidXN1YXJpbyI6InJvZ2VsaW9AYWd1YS5jb20iLCJwZXJmaWwiOiJBZG1pbmlzdHJhZG9yIiwiYWxpYXMiOiJQaW5rQm95In0sImFwcCI6IkFQSSBSRVNUIENEIDIwMTcifQ.GSpkrzIp2UbJWNfC1brUF_O4h8PyqykmW18vte1bhMw";
-
-			//token error
-			//$token="octavioAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTc1Njc5NjUsImV4cCI6MTQ5NzU2NDM2NSwiYXVkIjoiNGQ5ODU5ZGU4MjY4N2Y0YzEyMDg5NzY5MzQ2OGFhNzkyYTYxNTMwYSIsImRhdGEiOnsidXN1YXJpbyI6InJvZ2VsaW9AYWd1YS5jb20iLCJwZXJmaWwiOiJBZG1pbmlzdHJhZG9yIiwiYWxpYXMiOiJQaW5rQm95In0sImFwcCI6IkFQSSBSRVNUIENEIDIwMTcifQ.GSpkrzIp2UbJWNfC1brUF_O4h8PyqykmW18vte1bhMw";
-	
 			//tomo el token del header
 			
 				$arrayConToken = $request->getHeader('token');
@@ -67,23 +58,42 @@ class MWparaAutentificar
 			if($objDelaRespuesta->esValido)
 			{						
 				if($request->isPost())
-				{		
+				{
 					// el post sirve para todos los logeados			    
 					$response = $next($request, $response);
 				}
-				else
+				else if($request->isGet())
 				{
+					//al get pueden entrar todos los logeados
+					$response = $next($request, $response);
+				}
+				else if($request->isDelete())
+				{
+					//solo el dueño tiene acceso al delete
 					$payload=AutentificadorJWT::ObtenerData($token);
 					//var_dump($payload);
 					// DELETE,PUT y DELETE sirve para todos los logeados y admin
-					if($payload->perfil=="Administrador")
+					if($payload->perfil=="dueño")
 					{
 						$response = $next($request, $response);
 					}		           	
 					else
 					{	
-						$objDelaRespuesta->respuesta="Solo administradores";
+						$objDelaRespuesta->respuesta="Solo Dueño";
 					}
+				}
+				else if($request->isPut())
+				{	//solo el encargado va a tener acceso
+					$payload=AutentificadorJWT::ObtenerData($token);
+					if ($payload->perfil=="encargado") 
+					{
+						$response = $next($request, $response);
+					} 
+					else 
+					{
+						$objDelaRespuesta->respuesta="Solo Encargados";
+					}
+					
 				}		          
 			}    
 			else
@@ -93,7 +103,7 @@ class MWparaAutentificar
 				$objDelaRespuesta->elToken=$token;
 
 			}  
-		}		  
+		//} //fin del else		  
 		if($objDelaRespuesta->respuesta!="")
 		{
 			$nueva=$response->withJson($objDelaRespuesta, 401);  

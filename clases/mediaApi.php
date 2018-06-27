@@ -23,6 +23,7 @@ class mediaApi extends media implements IApiUsable
      	$newresponse = $response->withJson($todosLosmedias, 200);  
     	return $newresponse;
     }
+
       public function CargarUno($request, $response, $args) {
      	
         $objDelaRespuesta= new media();
@@ -51,9 +52,9 @@ class mediaApi extends media implements IApiUsable
         if(isset($archivos['foto']))
         {
             $nombreAnterior=$archivos['foto']->getClientFilename();
-            $extension= explode(".", $nombreAnterior)  ;
+            $extension= explode(".", $nombreAnterior)  ;//quito el punto y guardo la extension y el nombre en distintos indices
             //var_dump($nombreAnterior);
-            $extension=array_reverse($extension);
+            $extension=array_reverse($extension);//doy vuelta el array para que la extension este en el indice 0
             echo $destino.$color.".".$extension[0];
             $archivos['foto']->moveTo($destino.$marca."_".$color.".".$extension[0]);
             //$archivos['foto']->moveTo($destino.$color.".".$extension[0]);
@@ -66,8 +67,9 @@ class mediaApi extends media implements IApiUsable
         return $response->withJson($objDelaRespuesta, 200);
     }
       public function BorrarUno($request, $response, $args) {
-     	$ArrayDeParametros = $request->getParsedBody();
-     	$id=$ArrayDeParametros['id'];
+     	//$ArrayDeParametros = $request->getParsedBody();
+         //$id=$ArrayDeParametros['id'];
+         $id=$args['id'];
      	$media= new media();
      	$media->id=$id;
      	$cantidadDeBorrados=$media->Borrarmedia();
@@ -76,7 +78,7 @@ class mediaApi extends media implements IApiUsable
 	    $objDelaRespuesta->cantidad=$cantidadDeBorrados;
 	    if($cantidadDeBorrados>0)
 	    	{
-	    		 $objDelaRespuesta->resultado="algo borro!!!";
+	    		 $objDelaRespuesta->resultado="Se borro la media con ID $id!!!";
 	    	}
 	    	else
 	    	{
