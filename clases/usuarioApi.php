@@ -108,9 +108,8 @@ class usuarioApi extends usuario implements IApiUsable
             $eltoken = AutentificadorJWT::CrearToken($datosUsuario);
         }
  
-        //$respuesta = array('datos'=>$datosUsuario,'token'=>$eltoken);  
         return $response->withJson($eltoken,200);
-   
+        //return $eltoken; //Usar este para que devuelva el token sin comillas
         
     }
 

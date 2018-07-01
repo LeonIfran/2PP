@@ -57,15 +57,24 @@ class MWparaAutentificar
 
 			if($objDelaRespuesta->esValido)
 			{						
-				if($request->isPost())
+				if($request->isGet())
 				{
-					// el post sirve para todos los logeados			    
+					// el get sirve para todos los logeados			    
 					$response = $next($request, $response);
 				}
-				else if($request->isGet())
+				else if($request->isPost())
 				{
-					//al get pueden entrar todos los logeados
-					$response = $next($request, $response);
+					//al post pueden entrar solo encargados y los empleados
+					$payload=AutentificadorJWT::ObtenerData($token);
+					if ($payload->perfil=="encargado" || $payload->perfil=="empleado") 
+					{
+						$response = $next($request, $response);
+					}
+					else
+					{
+						$objDelaRespuesta->respuesta="Solo Encargados y empleados";
+					}
+					
 				}
 				else if($request->isDelete())
 				{

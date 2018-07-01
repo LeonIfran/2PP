@@ -4,6 +4,7 @@ El nombre de la foto se conformará por el ID de la Media, el nombre del cliente
 La imagen se guardará en la carpeta /FotosVentas. (token: solos los encargados y los empleados). */
 class ventaMedia
 {
+    private $_id;
     private $_idMedia;
     private $_nombreCliente;
     private $_fecha;
@@ -14,6 +15,10 @@ class ventaMedia
     public function getIdMedia()
     {
         return $this->_idMedia;
+    }
+    public function getId()
+    {
+        return $this->_id;
     }
     public function getnombreCliente()
     {
@@ -31,6 +36,10 @@ class ventaMedia
     public function setIdMedia($value)
     {
         $this->_idMedia = $value;
+    }
+    public function setId($value)
+    {
+        $this->_id = $value;
     }
     public function setnombreCliente($value)
     {
@@ -51,13 +60,50 @@ class ventaMedia
     public function insertarVenta()
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT into ventamedia (idMedia, nombreCliente, fecha, importe)values(:id,:nombre,:fecha,:importe)");
-        $consulta->bindValue(':id', $this->getIdMedia(), PDO::PARAM_INT);
+        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT into ventamedia (idMedia, nombreCliente, fecha, importe)values(:idMedia,:nombre,:fecha,:importe)");
+        $consulta->bindValue(':idMedia', $this->getIdMedia(), PDO::PARAM_INT);
         $consulta->bindValue(':nombre',$this->getnombreCliente(), PDO::PARAM_STR);
         $consulta->bindValue(':fecha', $this->getFecha(), PDO::PARAM_STR);
         $consulta->bindValue(':importe', $this->getImporte(),PDO::PARAM_INT);
         $consulta->execute();
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
+    }
+
+    public function modificarVenta()
+    {
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objetoAccesoDato->RetornarConsulta("update ventamedia 
+        set idMedia=:idMedia,
+        nombreCliente=:nombre, 
+        fecha=:fecha, 
+        importe=:importe
+        WHERE id=:id");
+        //bindeo de parametros
+        $consulta->bindvalue(':id',$this->getId(),PDO::PARAM_INT);
+        $consulta->bindvalue(':idMedia',$this->getIdMedia(),PDO::PARAM_INT);
+        $consulta->bindValue(':nombre',$this->getnombreCliente(),PDO::PARAM_STR);
+        $consulta->bindValue(':fecha',$this->getFecha(),PDO::PARAM_STR);
+        $consulta->bindValue(':importe',$this->getimporte(),PDO::PARAM_INT);
+        //ejecuto
+        $consulta->execute();
+        //retorno
+        return $consulta;
+        
+    }
+    public static function TraerUnaVenta($id)
+    {
+/*         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("select id, nombre as nombre, clave as clave,perfil as perfil from usuario where id = $id");
+        $consulta->execute();
+        $usuarioBuscado= $consulta->fetchObject('usuario');
+        return $usuarioBuscado;		 */
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("select id, idMedia, nombreCliente, fecha, importe from ventaMedia where id=:id");
+        $consulta->bindvalue(':id',$id ,PDO::PARAM_INT);
+        $consulta->execute();
+        $ventaBuscada = $consulta->fetchObject('ventaMedia');
+        return $ventaBuscada;
+
     }
 #end region
 }

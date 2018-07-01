@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-06-2018 a las 07:45:17
+-- Tiempo de generación: 01-07-2018 a las 02:57:32
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.20
 
@@ -79,9 +79,10 @@ INSERT INTO `usuario` (`id`, `nombre`, `clave`, `perfil`) VALUES
 --
 
 CREATE TABLE `ventamedia` (
+  `id` int(11) NOT NULL,
   `idMedia` int(11) NOT NULL,
   `nombreCliente` varchar(50) NOT NULL,
-  `fecha` date NOT NULL,
+  `fecha` datetime NOT NULL,
   `importe` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -89,14 +90,16 @@ CREATE TABLE `ventamedia` (
 -- Volcado de datos para la tabla `ventamedia`
 --
 
-INSERT INTO `ventamedia` (`idMedia`, `nombreCliente`, `fecha`, `importe`) VALUES
-(2, 'Saitama', '2018-02-02', 30),
-(2, 'Saitama', '2018-02-02', 30),
-(3, 'Raven', '2015-03-04', 20),
-(1, 'Romina', '0000-00-00', 15),
-(1, 'Romina', '2018-06-27', 15),
-(1, 'Romina', '2018-06-27', 15),
-(3, 'owoka', '2018-06-27', 22);
+INSERT INTO `ventamedia` (`id`, `idMedia`, `nombreCliente`, `fecha`, `importe`) VALUES
+(1, 2, 'Saitama', '2018-02-02 00:00:00', 30),
+(2, 2, 'Saitama', '2018-02-02 00:00:00', 30),
+(3, 3, 'reaperoo', '2019-03-06 00:00:00', 45),
+(4, 2, 'sylen3', '2016-08-09 00:00:00', 7.99),
+(5, 1, 'Romina', '2018-06-27 00:00:00', 15),
+(6, 1, 'Romina', '2018-06-27 00:00:00', 15),
+(7, 3, 'reaperoo', '2019-03-06 00:00:00', 45),
+(8, 4, 'aaaa', '2018-06-27 00:00:00', 55),
+(9, 3, 'blaze', '2012-06-25 02:47:43', 66);
 
 --
 -- Índices para tablas volcadas
@@ -115,6 +118,12 @@ ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `ventamedia`
+--
+ALTER TABLE `ventamedia`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -128,6 +137,11 @@ ALTER TABLE `medias`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT de la tabla `ventamedia`
+--
+ALTER TABLE `ventamedia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
