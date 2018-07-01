@@ -37,11 +37,11 @@ class mediaApi extends media implements IApiUsable
         
 
         $mimedia = new media();
-        $mimedia->color=$color;
-        $mimedia->marca=$marca;
-        $mimedia->precio=$precio;
-        $mimedia->talle=$talle;
-        $mimedia->foto="vacio";
+        $mimedia->setColor($color);
+        $mimedia->setMarca($marca);
+        $mimedia->setPrecio($precio);
+        $mimedia->setTalle($talle);
+        $mimedia->setFoto("vacio");
 
         //$mimedia->InsertarElmediaParametros();
         
@@ -58,27 +58,31 @@ class mediaApi extends media implements IApiUsable
             echo $destino.$color.".".$extension[0];
             $archivos['foto']->moveTo($destino.$marca."_".$color.".".$extension[0]);
             //$archivos['foto']->moveTo($destino.$color.".".$extension[0]);
-            $mimedia->foto=$destino.$marca."_".$color.".".$extension[0];
+            $pathCompleto = $destino.$marca."_".$color.".".$extension[0];
+            //$mimedia->foto=$destino.$marca."_".$color.".".$extension[0];
+            $mimedia->setFoto($pathCompleto);
         }
 
-        $mimedia->InsertarElmedia();       
+        $mimedia->InsertarElmediaParametros();       
         //$response->getBody()->write("se guardo el media");
         $objDelaRespuesta->respuesta="Se guardo la media.";   
         return $response->withJson($objDelaRespuesta, 200);
     }
       public function BorrarUno($request, $response, $args) {
-     	//$ArrayDeParametros = $request->getParsedBody();
-         //$id=$ArrayDeParametros['id'];
-         $id=$args['id'];
-     	$media= new media();
-     	$media->id=$id;
-     	$cantidadDeBorrados=$media->Borrarmedia();
 
+        $id=$args['id'];
+        $fotoBorrar =media::TraerUnmedia($id);//obtengo el objeto que voy a borrar
+     	$media= new media();
+     	$media->setID($id);
+     	$cantidadDeBorrados=$media->Borrarmedia();
+        
      	$objDelaRespuesta= new stdclass();
-	    $objDelaRespuesta->cantidad=$cantidadDeBorrados;
+        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
+
 	    if($cantidadDeBorrados>0)
 	    	{
-	    		 $objDelaRespuesta->resultado="Se borro la media con ID $id!!!";
+                 $objDelaRespuesta->resultado="Se borro la media con ID $id y se borro la foto en: ".$fotoBorrar->foto;
+                 unlink($fotoBorrar->foto);//borro la foto
 	    	}
 	    	else
 	    	{
@@ -93,10 +97,11 @@ class mediaApi extends media implements IApiUsable
      	$ArrayDeParametros = $request->getParsedBody();
 	    //var_dump($ArrayDeParametros);    	
 	    $mimedia = new media();
-	    $mimedia->id=$ArrayDeParametros['id'];
-	    $mimedia->titulo=$ArrayDeParametros['titulo'];
-	    $mimedia->marca=$ArrayDeParametros['cantante'];
-	    $mimedia->año=$ArrayDeParametros['anio'];
+	    $mimedia->setID($ArrayDeParametros['id']);
+	    $mimedia->setColor($ArrayDeParametros['Color']);
+	    $mimedia->setMarca($ArrayDeParametros['cantante']);
+        $mimedia->setPrecio($ArrayDeParametros['precio']);
+        $mimedia->setTalle($ArrayDeParametros['talle']);
 
 	   	$resultado =$mimedia->ModificarmediaParametros();
 	   	$objDelaRespuesta= new stdclass();

@@ -6,6 +6,24 @@ class usuario
   	public $clave;
   	public $perfil;
 
+	#region getters
+	public function getId()
+	{
+		return $this->_id;
+	}
+	public function getNombre()
+	{
+		return $this->_nombre;
+	}
+	public function getClave()
+	{
+		return $this->_clave;
+	}
+	public function getPerfil()
+	{
+		return $this->_perfil;
+	}
+	#endregion
 
 
   	public function Borrarusuario()

@@ -29,7 +29,7 @@ $app->add(function ($req, $res, $next) {
 $app->group('/media',function(){
     $this->post('/alta',\mediaApi::class . ':CargarUno');
     $this->get('/listado',\mediaApi::class . ':TraerTodos')->add(\MWparaFiltrar::class . ':FiltrarDatos');
-    $this->post('/hola', \personalApi::class . ':HolaMundo');
+    $this->get('/traer/{id}', \mediaApi::class . ':TraerUno');
     $this->delete('/borrar/{id}',\mediaApi::class . ':BorrarUno')->add(\MWparaAutentificar::class . ':VerificarUsuario');
     //$this->post('/',\personalApi::class . ':InsertarUno');
 });

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2018 a las 02:57:32
+-- Tiempo de generación: 01-07-2018 a las 06:07:31
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.20
 
@@ -43,7 +43,8 @@ CREATE TABLE `medias` (
 
 INSERT INTO `medias` (`id`, `color`, `marca`, `precio`, `talle`, `foto`) VALUES
 (1, 'rojo', 'puma', 12, 'M', 'clases/fotosrojo.jpg'),
-(2, 'rojo', 'puma', 12, 'M', 'clases/fotos/rojo.jpg');
+(5, 'verde', 'kappa', 17, 'XL', 'clases/fotos/kappa_verde.jpg'),
+(6, 'Violeta', 'kevingston', 40, 'L', 'clases/fotos/kevingston_Violeta.jpg');
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,7 @@ ALTER TABLE `ventamedia`
 -- AUTO_INCREMENT de la tabla `medias`
 --
 ALTER TABLE `medias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
