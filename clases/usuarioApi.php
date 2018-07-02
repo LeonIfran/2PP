@@ -34,9 +34,9 @@ class usuarioApi extends usuario implements IApiUsable
         $perfil= $ArrayDeParametros['perfil'];
         
         $miusuario = new usuario();
-        $miusuario->nombre=$nombre;
-        $miusuario->clave=$clave;
-        $miusuario->perfil=$perfil;
+        $miusuario->setNombre($nombre);
+        $miusuario->setClave($clave);
+        $miusuario->setPerfil($perfil);
         $miusuario->InsertarElusuarioParametros();
         //$archivos = $request->getUploadedFiles();
         //$destino="./fotos/";
@@ -51,21 +51,21 @@ class usuarioApi extends usuario implements IApiUsable
             $archivos['foto']->moveTo($destino.$nombre.".".$extension[0]);
         }        */
         //$response->getBody()->write("se guardo el cd");
-        $objDelaRespuesta->respuesta="Se guardo el Usuario: $miusuario->nombre.";   
+        $objDelaRespuesta->respuesta="Se guardo el Usuario: $nombre.";   
         return $response->withJson($objDelaRespuesta, 200);
     }
       public function BorrarUno($request, $response, $args) {
      	$ArrayDeParametros = $request->getParsedBody();
      	$id=$ArrayDeParametros['id'];
-     	$cd= new cd();
-     	$cd->id=$id;
-     	$cantidadDeBorrados=$cd->BorrarCd();
+     	$usuario= new usuario();
+     	$usuario->setId($id);
+     	$cantidadDeBorrados=$usuario->BorrarUsuario();
 
      	$objDelaRespuesta= new stdclass();
 	    $objDelaRespuesta->cantidad=$cantidadDeBorrados;
 	    if($cantidadDeBorrados>0)
 	    	{
-	    		 $objDelaRespuesta->resultado="algo borro!!!";
+	    		 $objDelaRespuesta->resultado="se borro el usuario con ID: $id!!!";
 	    	}
 	    	else
 	    	{
@@ -96,8 +96,8 @@ class usuarioApi extends usuario implements IApiUsable
     {
         $respuesta= new stdclass();
         $eltoken = NULL;
-        $elLogeo = NULL;
- 
+        $objDelaRespuesta = new stdclass();
+
         $ArrayDeParametros = $request->getParsedBody();
         $usuario=$ArrayDeParametros['usuario'];
         $clave=$ArrayDeParametros['clave'];
@@ -106,9 +106,16 @@ class usuarioApi extends usuario implements IApiUsable
         if ($datosUsuario != NULL) 
         {
             $eltoken = AutentificadorJWT::CrearToken($datosUsuario);
+            $objDelaRespuesta->mensaje= "Bienvenido $usuario. Favor de copiar el token sin comillas";
         }
- 
-        return $response->withJson($eltoken,200);
+        else
+        {
+            $objDelaRespuesta->mensaje = "Datos incorrectos, Reingrese.";
+            
+        }
+        
+        $objDelaRespuesta->token = $eltoken;
+        return $response->withJson($objDelaRespuesta,200);
         //return $eltoken; //Usar este para que devuelva el token sin comillas
         
     }

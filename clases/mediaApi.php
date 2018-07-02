@@ -55,7 +55,7 @@ class mediaApi extends media implements IApiUsable
             $extension= explode(".", $nombreAnterior)  ;//quito el punto y guardo la extension y el nombre en distintos indices
             //var_dump($nombreAnterior);
             $extension=array_reverse($extension);//doy vuelta el array para que la extension este en el indice 0
-            echo $destino.$color.".".$extension[0];
+            //echo $destino.$color.".".$extension[0];
             $archivos['foto']->moveTo($destino.$marca."_".$color.".".$extension[0]);
             //$archivos['foto']->moveTo($destino.$color.".".$extension[0]);
             $pathCompleto = $destino.$marca."_".$color.".".$extension[0];
@@ -65,7 +65,7 @@ class mediaApi extends media implements IApiUsable
 
         $mimedia->InsertarElmediaParametros();       
         //$response->getBody()->write("se guardo el media");
-        $objDelaRespuesta->respuesta="Se guardo la media.";   
+        $objDelaRespuesta->respuesta="Se guardo la media $marca $color en: ".$mimedia->getFoto();   
         return $response->withJson($objDelaRespuesta, 200);
     }
       public function BorrarUno($request, $response, $args) {
@@ -81,8 +81,14 @@ class mediaApi extends media implements IApiUsable
 
 	    if($cantidadDeBorrados>0)
 	    	{
-                 $objDelaRespuesta->resultado="Se borro la media con ID $id y se borro la foto en: ".$fotoBorrar->foto;
-                 unlink($fotoBorrar->foto);//borro la foto
+                 $objDelaRespuesta->resultado="Se borro la media con ID $id";
+                 
+                 if (file_exists($fotoBorrar->foto)) 
+                 {
+                    unlink($fotoBorrar->foto);//borro la foto
+                    $objDelaRespuesta->resultadoFoto = "Se borro la foto en: ".$fotoBorrar->foto;
+                 }
+                 
 	    	}
 	    	else
 	    	{

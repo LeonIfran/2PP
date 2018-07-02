@@ -64,7 +64,42 @@ class ventaMediaApi extends ventaMedia implements IApiUsable
     public function TraerTodos($request, $response, $args)
     {}
     public function BorrarUno($request, $response, $args)
-    {}
+    {
+        $id=$args['id'];
+        $venta = new ventaMedia();
+        $venta->setId($id);
+        $objABorrar = ventaMedia::TraerUnaVenta($id);//obtengo el objeto a borrar para sacarle el filename y demas
+        $destino = 'clases/FotosVentas/';
+        $nombreFoto = $objABorrar->idMedia."_".$objABorrar->nombreCliente;
+        $cantidadDeBorrados = $venta->BorrarUnaVenta();//borro el objeto
+       
+        $objDelaRespuesta= new stdclass();
+        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
+
+        //######### PARA BORRAR LA IMAGEN###############
+        $arrImagenes = glob($destino.$nombreFoto."_*.{jpeg,jpg,png}",GLOB_BRACE);
+        //echo $arrImagenes[0];
+        //################## TERMINA EL BORRADO DE LA IMAGEN ############
+        if ($cantidadDeBorrados>0) 
+        {   
+            $objDelaRespuesta->resultado = "Se borro la venta con id: $id ";
+            if (!empty($arrImagenes[0])) 
+            {
+                $ext = pathinfo($arrImagenes[0],PATHINFO_EXTENSION);
+                unlink($arrImagenes[0]);
+                $objDelaRespuesta->resultado = "Se borro la foto de venta con nombre: ".$arrImagenes[0];
+
+            }
+        }
+        else 
+        {
+            $objDelaRespuesta->resultado="no Borro nada!!!";
+        }
+        
+        $newResponse = $response->withJson($objDelaRespuesta,200);
+        return $newResponse;
+
+    }
     public function ModificarUno($request, $response, $args)
     {//uso esto asumiendo que la request va a ser post o PUT conform url encoded
         $miRespuesta = new stdclass();

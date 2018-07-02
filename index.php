@@ -43,6 +43,7 @@ $app->group('/ventas',function(){
     $this->post('/alta',\ventaMediaApi::class . ':CargarUno')->add(\MWparaAutentificar::class . ':VerificarUsuario');
     $this->post('/modificar',\ventaMediaApi::class . ':ModificarUno');
     $this->get('/traer/{id}',\ventaMediaApi::class . ':TraerUno');
+    $this->delete('/borrar/{id}',\ventaMediaApi::class . ':BorrarUno');
 });
 
 $app->group('/entrada',function(){

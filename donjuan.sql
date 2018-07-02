@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2018 a las 06:07:31
+-- Tiempo de generación: 02-07-2018 a las 04:50:42
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.20
 
@@ -42,9 +42,9 @@ CREATE TABLE `medias` (
 --
 
 INSERT INTO `medias` (`id`, `color`, `marca`, `precio`, `talle`, `foto`) VALUES
-(1, 'rojo', 'puma', 12, 'M', 'clases/fotosrojo.jpg'),
 (5, 'verde', 'kappa', 17, 'XL', 'clases/fotos/kappa_verde.jpg'),
-(6, 'Violeta', 'kevingston', 40, 'L', 'clases/fotos/kevingston_Violeta.jpg');
+(6, 'Violeta', 'kevingston', 40, 'L', 'clases/fotos/kevingston_Violeta.jpg'),
+(17, 'rojo', 'mercury', 40, 'XL', 'clases/fotos/mercury_rojo.jpg');
 
 -- --------------------------------------------------------
 
@@ -65,13 +65,9 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `nombre`, `clave`, `perfil`) VALUES
 (1, 'andres', '1234', 'dueño'),
-(2, 'empleado2', 'asdf', 'empleado'),
-(3, 'empleado', 'fdsa', 'empleado'),
-(4, 'encargado', 'qwerty', 'encargado'),
-(5, 'encargado', 'qwerty', 'encargado'),
-(6, 'empleado3', '1111', 'empleado'),
-(7, 'empleado4', '2222', 'empleado'),
-(8, 'empleado5', '5555', 'empleado');
+(9, 'empleado6', 'empleado', 'empleado'),
+(10, 'dueño', '1234', 'dueño'),
+(11, 'encargado', 'asdf', 'encargado');
 
 -- --------------------------------------------------------
 
@@ -92,15 +88,9 @@ CREATE TABLE `ventamedia` (
 --
 
 INSERT INTO `ventamedia` (`id`, `idMedia`, `nombreCliente`, `fecha`, `importe`) VALUES
-(1, 2, 'Saitama', '2018-02-02 00:00:00', 30),
-(2, 2, 'Saitama', '2018-02-02 00:00:00', 30),
 (3, 3, 'reaperoo', '2019-03-06 00:00:00', 45),
 (4, 2, 'sylen3', '2016-08-09 00:00:00', 7.99),
-(5, 1, 'Romina', '2018-06-27 00:00:00', 15),
-(6, 1, 'Romina', '2018-06-27 00:00:00', 15),
-(7, 3, 'reaperoo', '2019-03-06 00:00:00', 45),
-(8, 4, 'aaaa', '2018-06-27 00:00:00', 55),
-(9, 3, 'blaze', '2012-06-25 02:47:43', 66);
+(6, 1, 'Romina', '2018-06-27 00:00:00', 15);
 
 --
 -- Índices para tablas volcadas
@@ -132,12 +122,12 @@ ALTER TABLE `ventamedia`
 -- AUTO_INCREMENT de la tabla `medias`
 --
 ALTER TABLE `medias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `ventamedia`
 --

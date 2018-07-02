@@ -6,7 +6,7 @@ class usuario
   	public $clave;
   	public $perfil;
 
-	#region getters
+	#region getters y setterss
 	public function getId()
 	{
 		return $this->_id;
@@ -23,17 +23,34 @@ class usuario
 	{
 		return $this->_perfil;
 	}
+
+	public function setId($valor)
+	{
+		$this->_id = $valor;
+	}
+	public function setNombre($valor)
+	{
+		$this->_nombre = $valor;
+	}
+	public function setClave($valor)
+	{
+		$this->_clave = $valor;
+	}
+	public function setPerfil($valor)
+	{
+		$this->_perfil = $valor;
+	}
 	#endregion
 
 
-  	public function Borrarusuario()
+  	public function BorrarUsuario()
 	 {
 	 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				delete 
 				from usuario 				
 				WHERE id=:id");	
-				$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);		
+				$consulta->bindValue(':id',$this->getId(), PDO::PARAM_INT);		
 				$consulta->execute();
 				return $consulta->rowCount();
 	 }
@@ -51,20 +68,6 @@ class usuario
 				return $consulta->rowCount();
 
 	 }
-	public function Modificarusuario()
-	 {
-
-			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("
-				update usuario 
-				set nombre='$this->nombre',
-				clave='$this->clave',
-				perfil='$this->perfil'
-				WHERE id='$this->id'");
-			return $consulta->execute();
-
-	 }
-	
   
 	 public function InsertarElusuario()
 	 {
@@ -85,10 +88,10 @@ class usuario
 				clave=:clave,
 				perfil=:perfil
 				WHERE id=:id");
-			$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);
-			$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_INT);
-			$consulta->bindValue(':perfil', $this->perfil, PDO::PARAM_STR);
-			$consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
+			$consulta->bindValue(':id',$this->getId(), PDO::PARAM_INT);
+			$consulta->bindValue(':nombre',$this->getNombre(), PDO::PARAM_INT);
+			$consulta->bindValue(':perfil', $this->getPerfil(), PDO::PARAM_STR);
+			$consulta->bindValue(':clave', $this->getClave(), PDO::PARAM_STR);
 			return $consulta->execute();
 	 }
 
@@ -96,9 +99,9 @@ class usuario
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (nombre,clave,perfil)values(:nombre,:clave,:perfil)");
-				$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
-				$consulta->bindValue(':perfil', $this->perfil, PDO::PARAM_STR);
-				$consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
+				$consulta->bindValue(':nombre',$this->getNombre(), PDO::PARAM_STR);
+				$consulta->bindValue(':perfil', $this->getPerfil(), PDO::PARAM_STR);
+				$consulta->bindValue(':clave', $this->getClave(), PDO::PARAM_STR);
 				$consulta->execute();		
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	 }

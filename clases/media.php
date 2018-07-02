@@ -76,7 +76,7 @@ class media
 				return $consulta->rowCount();
 	 }
 
-	public static function BorrarmediaPorAnio($precio)
+/* 	public static function BorrarmediaPorAnio($precio)
 	 {
 
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
@@ -88,7 +88,7 @@ class media
 				$consulta->execute();
 				return $consulta->rowCount();
 
-	 }
+	 } */
 	public function Modificarmedia()
 	 {
 

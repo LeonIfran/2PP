@@ -105,6 +105,18 @@ class ventaMedia
         return $ventaBuscada;
 
     }
+
+    public function BorrarUnaVenta()
+    {
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
+        $consulta = $objetoAccesoDato->RetornarConsulta("
+            delete
+            from ventamedia
+            where id=:id");
+        $consulta->bindValue(':id',$this->getId(),PDO::PARAM_INT);
+        $consulta->execute();
+        return $consulta->rowCount();
+    }
 #end region
 }
 
