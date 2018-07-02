@@ -78,11 +78,11 @@ class ventaMediaApi extends ventaMedia implements IApiUsable
 
         //######### PARA BORRAR LA IMAGEN###############
         $arrImagenes = glob($destino.$nombreFoto."_*.{jpeg,jpg,png}",GLOB_BRACE);
-        //echo $arrImagenes[0];
         //################## TERMINA EL BORRADO DE LA IMAGEN ############
         if ($cantidadDeBorrados>0) 
         {   
             $objDelaRespuesta->resultado = "Se borro la venta con id: $id ";
+
             if (!empty($arrImagenes[0])) 
             {
                 $ext = pathinfo($arrImagenes[0],PATHINFO_EXTENSION);
@@ -130,8 +130,6 @@ class ventaMediaApi extends ventaMedia implements IApiUsable
             $arrImagenes = glob($carpeta.$nombreImagen.".{jpeg,jpg,png}",GLOB_BRACE);
             if (!empty($arrImagenes[0])) 
             {
-                //rename($img[0],"./backUpFotos/".$fecha.".".$ext);
-                //$ext = pathinfo($img[0],PATHINFO_EXTENSION)
                 $ext = pathinfo($arrImagenes[0],PATHINFO_EXTENSION);
                 rename($arrImagenes[0],"clases/FotosVentas/Backup/".$nombreImagen.".".$ext);
                 $miRespuesta->Imgbackup="Se movio la imagen $nombreImagen.$ext a la carpeta backup";

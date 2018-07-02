@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2018 a las 04:50:42
+-- Tiempo de generación: 02-07-2018 a las 05:53:54
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.20
 
@@ -65,9 +65,9 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `nombre`, `clave`, `perfil`) VALUES
 (1, 'andres', '1234', 'dueño'),
-(9, 'empleado6', 'empleado', 'empleado'),
 (10, 'dueño', '1234', 'dueño'),
-(11, 'encargado', 'asdf', 'encargado');
+(11, 'encargado', 'asdf', 'encargado'),
+(12, 'empleado', '1212', 'empleado');
 
 -- --------------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE `ventamedia` (
 
 INSERT INTO `ventamedia` (`id`, `idMedia`, `nombreCliente`, `fecha`, `importe`) VALUES
 (3, 3, 'reaperoo', '2019-03-06 00:00:00', 45),
-(4, 2, 'sylen3', '2016-08-09 00:00:00', 7.99),
+(4, 5, 'Rick', '2014-06-25 02:47:43', 42),
 (6, 1, 'Romina', '2018-06-27 00:00:00', 15);
 
 --
@@ -127,7 +127,7 @@ ALTER TABLE `medias`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `ventamedia`
 --
